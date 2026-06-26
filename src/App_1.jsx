@@ -17,37 +17,9 @@ const storageSet = (key, value) => {
   catch (e) { console.error("Storage lleno:", e); }
 };
 
-// ── Datos de ejemplo Mayo 2026 ──
-const SEED_ING = [
-  { id:"i1",  fecha:"2026-05-13", concepto:"Prestaciones",          tipo:"Laboral",           banco:"Efectivo",        monto:14992.78 },
-  { id:"i2",  fecha:"2026-05-13", concepto:"BAC",                   tipo:"Banco",             banco:"BAC",             monto:4000.00  },
-  { id:"i3",  fecha:"2026-05-13", concepto:"Ficohsa",               tipo:"Banco",             banco:"Ficohsa",         monto:4000.00  },
-  { id:"i4",  fecha:"2026-05-13", concepto:"Allan",                 tipo:"Préstamo recibido", banco:"Efectivo",        monto:2240.00  },
-  { id:"i5",  fecha:"2026-05-13", concepto:"Comida Rocío",          tipo:"Apoyo familiar",    banco:"Efectivo",        monto:232.00   },
-  { id:"i6",  fecha:"2026-05-13", concepto:"Abuela",                tipo:"Apoyo familiar",    banco:"Efectivo",        monto:2000.00  },
-  { id:"i7",  fecha:"2026-05-13", concepto:"Efectivo Rocío",        tipo:"Efectivo",          banco:"Efectivo",        monto:2000.00  },
-  { id:"i8",  fecha:"2026-05-13", concepto:"Compra baterías/mouse", tipo:"Venta",             banco:"Efectivo",        monto:90.00    },
-  { id:"i9",  fecha:"2026-05-13", concepto:"Compra Jugos",          tipo:"Venta",             banco:"Efectivo",        monto:30.00    },
-  { id:"i10", fecha:"2026-05-13", concepto:"Compra número",         tipo:"Venta",             banco:"Efectivo",        monto:20.00    },
-  { id:"i11", fecha:"2026-05-13", concepto:"Préstamo Yury",         tipo:"Préstamo recibido", banco:"Efectivo",        monto:300.00   },
-];
-const SEED_EG = [
-  { id:"e1",  fecha:"2026-05-13", concepto:"Compra Ingrid",               categoria:"Personal",        banco:"BAC",            monto:272.00  },
-  { id:"e2",  fecha:"2026-05-13", concepto:"Cuenta Netflix",              categoria:"Entretenimiento", banco:"BAC",            monto:374.21  },
-  { id:"e3",  fecha:"2026-05-13", concepto:"Préstamo Jami",               categoria:"Préstamo pagado", banco:"BAC",            monto:500.00  },
-  { id:"e4",  fecha:"2026-05-13", concepto:"Vana",                        categoria:"Personal",        banco:"BAC",            monto:1000.00 },
-  { id:"e5",  fecha:"2026-05-13", concepto:"Allan",                       categoria:"Personal",        banco:"BAC",            monto:280.00  },
-  { id:"e6",  fecha:"2026-05-13", concepto:"Netflix abuelo",              categoria:"Entretenimiento", banco:"BAC",            monto:186.97  },
-  { id:"e7",  fecha:"2026-05-13", concepto:"Vana",                        categoria:"Personal",        banco:"BAC",            monto:1000.00 },
-  { id:"e8",  fecha:"2026-05-13", concepto:"Protector y vidrio templado", categoria:"Electrónico",     banco:"Ficohsa",        monto:350.00  },
-  { id:"e9",  fecha:"2026-05-13", concepto:"Farmacia",                    categoria:"Salud",           banco:"Ficohsa",        monto:208.98  },
-  { id:"e10", fecha:"2026-05-13", concepto:"Cafetería Uni",               categoria:"Alimentación",    banco:"Ficohsa",        monto:98.00   },
-  { id:"e11", fecha:"2026-05-13", concepto:"Super mamá",                  categoria:"Familia",         banco:"BA (Atlántida)", monto:125.00  },
-  { id:"e12", fecha:"2026-05-13", concepto:"Boleto Concierto",            categoria:"Entretenimiento", banco:"BA (Atlántida)", monto:1650.00 },
-  { id:"e13", fecha:"2026-05-13", concepto:"Recarga Hellen",              categoria:"Comunicación",    banco:"BA (Atlántida)", monto:67.00   },
-  { id:"e14", fecha:"2026-05-13", concepto:"Depósito a BAC",              categoria:"Transferencia",   banco:"BA (Atlántida)", monto:400.00  },
-  { id:"e15", fecha:"2026-05-13", concepto:"Comisión bancaria",           categoria:"Bancario",        banco:"BA (Atlántida)", monto:40.00   },
-];
+// ── Datos de ejemplo Mayo 2026 (solo para referencia, no se cargan automáticamente) ──
+const SEED_ING = [];
+const SEED_EG = [];
 
 const TIPOS_ING = ["Laboral","Banco","Préstamo recibido","Venta","Apoyo familiar","Efectivo","Otro"];
 const CATS_EG   = ["Alimentación","Entretenimiento","Salud","Transporte","Familia","Educación","Comunicación","Electrónico","Personal","Bancario","Préstamo pagado","Transferencia","Otro"];
