@@ -83,6 +83,7 @@ export default function App() {
   const [filterB,     setFilterB]     = useState("Todos");
   const [filterM,     setFilterM]     = useState("Todos");
   const [saving,      setSaving]      = useState(false);
+  const [editId,      setEditId]      = useState(null);
 
   // ── Cargar datos ──
   useEffect(() => {
@@ -155,20 +156,28 @@ export default function App() {
     XLSX.writeFile(wb, `FinanzasHN_${mes}.xlsx`);
   };
 
-  const openModal = (type) => { setForm({ fecha:new Date().toISOString().split("T")[0] }); setModal(type); };
+  const openModal = (type) => { setForm({ fecha:new Date().toISOString().split("T")[0] }); setEditId(null); setModal(type); };
+
+  const openEdit = (type, r) => {
+    setForm({ ...r });
+    setEditId(r.id);
+    setModal(type);
+  };
 
   const handleSave = () => {
     if(!form.concepto?.trim()||!form.monto||!form.fecha) return;
     const monto = parseFloat(form.monto);
     if(isNaN(monto)||monto<=0) return;
     if(modal==="ing"){
-      const updated = [...ingresos,{...form,id:uid(),monto,tipo:form.tipo||"Otro",banco:form.banco||"Efectivo"}];
-      setIngresos(updated); saveIng(updated); showToast("✓ Ingreso guardado");
+      const registro = {...form,id:editId||uid(),monto,tipo:form.tipo||"Otro",banco:form.banco||"Efectivo"};
+      const updated = editId ? ingresos.map(r=>r.id===editId?registro:r) : [...ingresos,registro];
+      setIngresos(updated); saveIng(updated); showToast(editId?"✓ Ingreso actualizado":"✓ Ingreso guardado");
     } else {
-      const updated = [...egresos,{...form,id:uid(),monto,categoria:form.categoria||"Otro",banco:form.banco||"Efectivo"}];
-      setEgresos(updated); saveEg(updated); showToast("✓ Gasto guardado");
+      const registro = {...form,id:editId||uid(),monto,categoria:form.categoria||"Otro",banco:form.banco||"Efectivo"};
+      const updated = editId ? egresos.map(r=>r.id===editId?registro:r) : [...egresos,registro];
+      setEgresos(updated); saveEg(updated); showToast(editId?"✓ Gasto actualizado":"✓ Gasto guardado");
     }
-    setModal(null);
+    setModal(null); setEditId(null);
   };
 
   const handleDelete = () => {
@@ -210,7 +219,9 @@ export default function App() {
         .overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);z-index:200;display:flex;align-items:flex-end;justify-content:center;}
         .modal{background:#0f1320;border:1px solid #1a2035;width:100%;max-width:460px;padding:28px 24px;border-radius:24px 24px 0 0;}
         .del-btn{opacity:0;background:#ff4444;color:#fff;border:none;border-radius:7px;width:28px;height:28px;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;transition:opacity .2s;flex-shrink:0;}
+        .edit-btn{opacity:0;background:#2563eb;color:#fff;border:none;border-radius:7px;width:28px;height:28px;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;transition:opacity .2s;flex-shrink:0;}
         .row:hover .del-btn{opacity:1;}
+        .row:hover .edit-btn{opacity:1;}
         .toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#131929;border:1px solid #1e2a40;border-radius:999px;padding:10px 20px;font-size:13px;font-weight:600;color:#e2e8f0;z-index:300;pointer-events:none;white-space:nowrap;}
         .stat{background:linear-gradient(135deg,#0f1320 0%,#141829 100%);border:1px solid #1a2035;border-radius:20px;padding:20px;}
         @keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
@@ -365,7 +376,7 @@ export default function App() {
                       <td style={{padding:"12px 14px"}}><span className="pill" style={{background:(TIPO_COLOR[r.tipo]||"#9ca3af")+"20",color:TIPO_COLOR[r.tipo]||"#9ca3af"}}>{r.tipo}</span></td>
                       <td style={{padding:"12px 14px",fontSize:12,color:"#64748b"}}>{r.banco}</td>
                       <td style={{padding:"12px 14px",fontSize:14,fontWeight:700,color:"#10b981",textAlign:"right",whiteSpace:"nowrap"}}>{L(r.monto)}</td>
-                      <td style={{padding:"12px 8px",textAlign:"center"}}><button className="del-btn" onClick={()=>setConfirm({type:"ing",id:r.id,concepto:r.concepto})}>✕</button></td>
+                      <td style={{padding:"12px 8px",textAlign:"center"}}><div style={{display:"flex",gap:4,justifyContent:"center"}}><button className="edit-btn" onClick={()=>openEdit("ing",r)}>✏</button><button className="del-btn" onClick={()=>setConfirm({type:"ing",id:r.id,concepto:r.concepto})}>✕</button></div></td>
                     </tr>
                   ))}
                   {filtI.length===0&&<tr><td colSpan={6} style={{padding:"28px",textAlign:"center",color:"#334155",fontSize:13}}>No hay ingresos en este período</td></tr>}
@@ -405,7 +416,7 @@ export default function App() {
                       <td style={{padding:"12px 14px"}}><span className="pill" style={{background:(CAT_COLOR[r.categoria]||"#9ca3af")+"20",color:CAT_COLOR[r.categoria]||"#9ca3af"}}>{r.categoria}</span></td>
                       <td style={{padding:"12px 14px",fontSize:12,color:"#64748b"}}>{r.banco}</td>
                       <td style={{padding:"12px 14px",fontSize:14,fontWeight:700,color:"#ef4444",textAlign:"right",whiteSpace:"nowrap"}}>{L(r.monto)}</td>
-                      <td style={{padding:"12px 8px",textAlign:"center"}}><button className="del-btn" onClick={()=>setConfirm({type:"eg",id:r.id,concepto:r.concepto})}>✕</button></td>
+                      <td style={{padding:"12px 8px",textAlign:"center"}}><div style={{display:"flex",gap:4,justifyContent:"center"}}><button className="edit-btn" onClick={()=>openEdit("eg",r)}>✏</button><button className="del-btn" onClick={()=>setConfirm({type:"eg",id:r.id,concepto:r.concepto})}>✕</button></div></td>
                     </tr>
                   ))}
                   {filtE.length===0&&<tr><td colSpan={6} style={{padding:"28px",textAlign:"center",color:"#334155",fontSize:13}}>No hay gastos en este período</td></tr>}
@@ -487,9 +498,9 @@ export default function App() {
           <div className="modal slide-up" onClick={e=>e.stopPropagation()}>
             <div style={{width:40,height:4,background:"#1a2035",borderRadius:999,margin:"0 auto 20px"}}/>
             <div style={{fontFamily:"'Playfair Display',serif",fontWeight:900,fontSize:22,color:modal==="ing"?"#10b981":"#ef4444",marginBottom:4}}>
-              {modal==="ing"?"Nuevo Ingreso":"Nuevo Gasto"}
+              {editId ? (modal==="ing"?"Editar Ingreso":"Editar Gasto") : (modal==="ing"?"Nuevo Ingreso":"Nuevo Gasto")}
             </div>
-            <div style={{fontSize:12,color:"#334155",marginBottom:22}}>Completa los datos y toca Guardar</div>
+            <div style={{fontSize:12,color:"#334155",marginBottom:22}}>{editId?"Modifica los datos y toca Guardar":"Completa los datos y toca Guardar"}</div>
             <div style={{display:"flex",flexDirection:"column",gap:14}}>
               <div>
                 <label style={{fontSize:11,fontWeight:700,color:"#475569",textTransform:"uppercase",letterSpacing:".5px",display:"block",marginBottom:6}}>Concepto *</label>
@@ -524,7 +535,7 @@ export default function App() {
                 <button className="btn" onClick={()=>setModal(null)} style={{flex:1,background:"#131929",color:"#64748b",padding:"13px"}}>Cancelar</button>
                 <button className="btn" onClick={handleSave}
                   style={{flex:2,background:modal==="ing"?"linear-gradient(135deg,#065f46,#10b981)":"linear-gradient(135deg,#7f1d1d,#ef4444)",color:"#fff",padding:"13px",fontSize:14}}>
-                  Guardar {modal==="ing"?"Ingreso":"Gasto"}
+                  {editId ? "Actualizar" : (modal==="ing"?"Guardar Ingreso":"Guardar Gasto")}
                 </button>
               </div>
             </div>
