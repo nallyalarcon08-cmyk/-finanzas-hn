@@ -51,7 +51,7 @@ const SEED_EG = [
   { id:"e15", fecha:"2026-05-13", concepto:"Comisión bancaria",           categoria:"Bancario",        banco:"BA (Atlántida)", monto:40.00   },
 ];
 
-const TIPOS_ING = ["Salario","Netflix / Plataforma","Donación","Banco","Préstamo recibido","Venta","Apoyo familiar","Efectivo","Otro"];
+const TIPOS_ING = ["Salario","Netflix / Plataforma","Donación","Banco","Préstamo recibido","Préstamo devuelto","Venta","Apoyo familiar","Efectivo","Otro"];
 const CATS_EG   = [
   // Personal y estilo de vida
   "Ropa y calzado","Maquillaje y belleza","Joyería y accesorios","Peluquería / Estética","Gym / Deporte","Higiene personal","Limpieza del hogar",
@@ -68,7 +68,7 @@ const CATS_EG   = [
   // Familia
   "Familia",
   // Finanzas
-  "Préstamo pagado","Transferencia","Bancario","Ahorro","Inversión","Deudas",
+  "Préstamo pagado","Préstamo otorgado","Transferencia","Bancario","Ahorro","Inversión","Deudas",
   // Otros
   "Mascotas","Viajes","Regalos","Personal","Electrónico","Otro"
 ];
@@ -108,13 +108,13 @@ const CAT_COLOR = {
   // Entretenimiento
   "Entretenimiento":"#a78bfa","Comunicación":"#38bdf8","Educación":"#c084fc","Familia":"#f472b6",
   // Finanzas
-  "Préstamo pagado":"#fbbf24","Transferencia":"#6ee7b7","Bancario":"#94a3b8","Ahorro":"#34d399","Inversión":"#10b981","Deudas":"#ef4444",
+  "Préstamo pagado":"#fbbf24","Préstamo otorgado":"#f97316","Transferencia":"#6ee7b7","Bancario":"#94a3b8","Ahorro":"#34d399","Inversión":"#10b981","Deudas":"#ef4444",
   // Otros
   "Mascotas":"#fb923c","Viajes":"#60a5fa","Regalos":"#f472b6","Personal":"#60a5fa","Electrónico":"#818cf8","Otro":"#9ca3af",
 };
 const TIPO_COLOR = {
   Salario:"#34d399","Netflix / Plataforma":"#ef4444", Donación:"#f472b6",
-  Banco:"#60a5fa","Préstamo recibido":"#fbbf24",
+  Banco:"#60a5fa","Préstamo recibido":"#fbbf24","Préstamo devuelto":"#4ade80",
   Venta:"#a78bfa","Apoyo familiar":"#f472b6",Efectivo:"#fb923c",Otro:"#9ca3af",
 };
 const BANCO_COLOR = {
