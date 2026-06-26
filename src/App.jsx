@@ -4,6 +4,8 @@ import * as XLSX from "xlsx";
 const KEY_ING  = "finanzas:ingresos";
 const KEY_EG   = "finanzas:egresos";
 const KEY_PRES = "finanzas:presupuesto";
+const KEY_VER  = "finanzas:version";
+const APP_VER  = "2.0"; // Cambia esto si quieres resetear datos en todos los dispositivos
 
 // ── Almacenamiento local (funciona fuera de Claude) ──
 const storageGet = (key) => {
@@ -120,11 +122,19 @@ export default function App() {
 
   // ── Cargar datos ──
   useEffect(() => {
+    const ver = localStorage.getItem(KEY_VER);
+    if(ver !== APP_VER) {
+      // Primera vez o versión anterior — limpiar datos de ejemplo
+      localStorage.removeItem(KEY_ING);
+      localStorage.removeItem(KEY_EG);
+      localStorage.removeItem(KEY_PRES);
+      localStorage.setItem(KEY_VER, APP_VER);
+    }
     const ri = storageGet(KEY_ING);
     const re = storageGet(KEY_EG);
     const rp = storageGet(KEY_PRES);
-    setIngresos(ri ? JSON.parse(ri.value) : SEED_ING);
-    setEgresos( re ? JSON.parse(re.value) : SEED_EG);
+    setIngresos(ri ? JSON.parse(ri.value) : []);
+    setEgresos( re ? JSON.parse(re.value) : []);
     setPresupuesto(rp ? JSON.parse(rp.value) : {});
     setLoaded(true);
   }, []);
