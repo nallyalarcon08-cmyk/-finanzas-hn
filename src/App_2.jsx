@@ -17,23 +17,84 @@ const storageSet = (key, value) => {
   catch (e) { console.error("Storage lleno:", e); }
 };
 
-// ── Datos de ejemplo Mayo 2026 (solo para referencia, no se cargan automáticamente) ──
-const SEED_ING = [];
-const SEED_EG = [];
+// ── Datos de ejemplo Mayo 2026 ──
+const SEED_ING = [
+  { id:"i1",  fecha:"2026-05-13", concepto:"Prestaciones",          tipo:"Laboral",           banco:"Efectivo",        monto:14992.78 },
+  { id:"i2",  fecha:"2026-05-13", concepto:"BAC",                   tipo:"Banco",             banco:"BAC",             monto:4000.00  },
+  { id:"i3",  fecha:"2026-05-13", concepto:"Ficohsa",               tipo:"Banco",             banco:"Ficohsa",         monto:4000.00  },
+  { id:"i4",  fecha:"2026-05-13", concepto:"Allan",                 tipo:"Préstamo recibido", banco:"Efectivo",        monto:2240.00  },
+  { id:"i5",  fecha:"2026-05-13", concepto:"Comida Rocío",          tipo:"Apoyo familiar",    banco:"Efectivo",        monto:232.00   },
+  { id:"i6",  fecha:"2026-05-13", concepto:"Abuela",                tipo:"Apoyo familiar",    banco:"Efectivo",        monto:2000.00  },
+  { id:"i7",  fecha:"2026-05-13", concepto:"Efectivo Rocío",        tipo:"Efectivo",          banco:"Efectivo",        monto:2000.00  },
+  { id:"i8",  fecha:"2026-05-13", concepto:"Compra baterías/mouse", tipo:"Venta",             banco:"Efectivo",        monto:90.00    },
+  { id:"i9",  fecha:"2026-05-13", concepto:"Compra Jugos",          tipo:"Venta",             banco:"Efectivo",        monto:30.00    },
+  { id:"i10", fecha:"2026-05-13", concepto:"Compra número",         tipo:"Venta",             banco:"Efectivo",        monto:20.00    },
+  { id:"i11", fecha:"2026-05-13", concepto:"Préstamo Yury",         tipo:"Préstamo recibido", banco:"Efectivo",        monto:300.00   },
+];
+const SEED_EG = [
+  { id:"e1",  fecha:"2026-05-13", concepto:"Compra Ingrid",               categoria:"Personal",        banco:"BAC",            monto:272.00  },
+  { id:"e2",  fecha:"2026-05-13", concepto:"Cuenta Netflix",              categoria:"Entretenimiento", banco:"BAC",            monto:374.21  },
+  { id:"e3",  fecha:"2026-05-13", concepto:"Préstamo Jami",               categoria:"Préstamo pagado", banco:"BAC",            monto:500.00  },
+  { id:"e4",  fecha:"2026-05-13", concepto:"Vana",                        categoria:"Personal",        banco:"BAC",            monto:1000.00 },
+  { id:"e5",  fecha:"2026-05-13", concepto:"Allan",                       categoria:"Personal",        banco:"BAC",            monto:280.00  },
+  { id:"e6",  fecha:"2026-05-13", concepto:"Netflix abuelo",              categoria:"Entretenimiento", banco:"BAC",            monto:186.97  },
+  { id:"e7",  fecha:"2026-05-13", concepto:"Vana",                        categoria:"Personal",        banco:"BAC",            monto:1000.00 },
+  { id:"e8",  fecha:"2026-05-13", concepto:"Protector y vidrio templado", categoria:"Electrónico",     banco:"Ficohsa",        monto:350.00  },
+  { id:"e9",  fecha:"2026-05-13", concepto:"Farmacia",                    categoria:"Salud",           banco:"Ficohsa",        monto:208.98  },
+  { id:"e10", fecha:"2026-05-13", concepto:"Cafetería Uni",               categoria:"Alimentación",    banco:"Ficohsa",        monto:98.00   },
+  { id:"e11", fecha:"2026-05-13", concepto:"Super mamá",                  categoria:"Familia",         banco:"BA (Atlántida)", monto:125.00  },
+  { id:"e12", fecha:"2026-05-13", concepto:"Boleto Concierto",            categoria:"Entretenimiento", banco:"BA (Atlántida)", monto:1650.00 },
+  { id:"e13", fecha:"2026-05-13", concepto:"Recarga Hellen",              categoria:"Comunicación",    banco:"BA (Atlántida)", monto:67.00   },
+  { id:"e14", fecha:"2026-05-13", concepto:"Depósito a BAC",              categoria:"Transferencia",   banco:"BA (Atlántida)", monto:400.00  },
+  { id:"e15", fecha:"2026-05-13", concepto:"Comisión bancaria",           categoria:"Bancario",        banco:"BA (Atlántida)", monto:40.00   },
+];
 
-const TIPOS_ING = ["Laboral","Banco","Préstamo recibido","Venta","Apoyo familiar","Efectivo","Otro"];
-const CATS_EG   = ["Alimentación","Entretenimiento","Salud","Transporte","Familia","Educación","Comunicación","Electrónico","Personal","Bancario","Préstamo pagado","Transferencia","Otro"];
+const TIPOS_ING = ["Salario","Netflix / Plataforma","Donación","Banco","Préstamo recibido","Venta","Apoyo familiar","Efectivo","Otro"];
+const CATS_EG   = [
+  // Personal y estilo de vida
+  "Ropa y calzado","Maquillaje y belleza","Joyería y accesorios","Peluquería / Estética","Gym / Deporte","Higiene personal","Limpieza del hogar",
+  // Alimentación
+  "Supermercado","Restaurantes","Comida rápida","Bebidas / Cafetería",
+  // Hogar
+  "Alquiler","Electricidad","Agua","Internet","Cable / TV",
+  // Transporte
+  "Gasolina","Taxi / Uber","Bus / Transporte público","Mantenimiento de vehículo",
+  // Salud
+  "Farmacia","Doctor / Consulta","Laboratorio",
+  // Entretenimiento y comunicación
+  "Entretenimiento","Comunicación","Educación",
+  // Familia
+  "Familia",
+  // Finanzas
+  "Préstamo pagado","Transferencia","Bancario","Ahorro","Inversión","Deudas",
+  // Otros
+  "Mascotas","Viajes","Regalos","Personal","Electrónico","Otro"
+];
 const BANCOS    = ["BAC","Ficohsa","BA (Atlántida)","Efectivo","Otro"];
 
 const CAT_COLOR = {
-  Entretenimiento:"#a78bfa", Personal:"#60a5fa", Salud:"#34d399", Familia:"#f472b6",
-  Alimentación:"#fb923c", Comunicación:"#38bdf8", Electrónico:"#818cf8",
-  Bancario:"#94a3b8", "Préstamo pagado":"#fbbf24", Transferencia:"#6ee7b7",
-  Transporte:"#f87171", Educación:"#c084fc", Otro:"#9ca3af",
+  // Personal
+  "Ropa y calzado":"#f472b6","Maquillaje y belleza":"#e879f9","Joyería y accesorios":"#c084fc",
+  "Peluquería / Estética":"#a78bfa","Gym / Deporte":"#34d399","Higiene personal":"#38bdf8","Limpieza del hogar":"#67e8f9",
+  // Alimentación
+  "Supermercado":"#fb923c","Restaurantes":"#f97316","Comida rápida":"#ef4444","Bebidas / Cafetería":"#fbbf24",
+  // Hogar
+  "Alquiler":"#60a5fa","Electricidad":"#fde047","Agua":"#38bdf8","Internet":"#818cf8","Cable / TV":"#6366f1",
+  // Transporte
+  "Gasolina":"#f87171","Taxi / Uber":"#fb923c","Bus / Transporte público":"#fca5a5","Mantenimiento de vehículo":"#f43f5e",
+  // Salud
+  "Farmacia":"#34d399","Doctor / Consulta":"#10b981","Laboratorio":"#6ee7b7",
+  // Entretenimiento
+  "Entretenimiento":"#a78bfa","Comunicación":"#38bdf8","Educación":"#c084fc","Familia":"#f472b6",
+  // Finanzas
+  "Préstamo pagado":"#fbbf24","Transferencia":"#6ee7b7","Bancario":"#94a3b8","Ahorro":"#34d399","Inversión":"#10b981","Deudas":"#ef4444",
+  // Otros
+  "Mascotas":"#fb923c","Viajes":"#60a5fa","Regalos":"#f472b6","Personal":"#60a5fa","Electrónico":"#818cf8","Otro":"#9ca3af",
 };
 const TIPO_COLOR = {
-  Laboral:"#34d399", Banco:"#60a5fa", "Préstamo recibido":"#fbbf24",
-  Venta:"#a78bfa", "Apoyo familiar":"#f472b6", Efectivo:"#fb923c", Otro:"#9ca3af",
+  Salario:"#34d399","Netflix / Plataforma":"#ef4444", Donación:"#f472b6",
+  Banco:"#60a5fa","Préstamo recibido":"#fbbf24",
+  Venta:"#a78bfa","Apoyo familiar":"#f472b6",Efectivo:"#fb923c",Otro:"#9ca3af",
 };
 const BANCO_COLOR = {
   "BAC":"#60a5fa","Ficohsa":"#f472b6","BA (Atlántida)":"#fbbf24","Efectivo":"#34d399","Otro":"#94a3b8",
