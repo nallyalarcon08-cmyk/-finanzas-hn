@@ -72,7 +72,26 @@ const CATS_EG   = [
   // Otros
   "Mascotas","Viajes","Regalos","Personal","Electrónico","Otro"
 ];
-const BANCOS    = ["BAC","Ficohsa","BA (Atlántida)","Efectivo","Otro"];
+const BANCOS = [
+  "BAC Honduras",
+  "Ficohsa",
+  "Banco Atlántida",
+  "Davivienda Honduras",
+  "Banco de Occidente",
+  "Banco Continental",
+  "Banco del País (BANPAIS)",
+  "Promerica",
+  "Lafise",
+  "Banco Azteca",
+  "Bancatlan",
+  "FICENSA",
+  "Sogerin",
+  "BANHCAFE",
+  "Banco Popular",
+  "BANADESA",
+  "Efectivo",
+  "Otro"
+];
 
 const CAT_COLOR = {
   // Personal
@@ -99,7 +118,24 @@ const TIPO_COLOR = {
   Venta:"#a78bfa","Apoyo familiar":"#f472b6",Efectivo:"#fb923c",Otro:"#9ca3af",
 };
 const BANCO_COLOR = {
-  "BAC":"#60a5fa","Ficohsa":"#f472b6","BA (Atlántida)":"#fbbf24","Efectivo":"#34d399","Otro":"#94a3b8",
+  "BAC Honduras":"#60a5fa",
+  "Ficohsa":"#f472b6",
+  "Banco Atlántida":"#fbbf24",
+  "Davivienda Honduras":"#ef4444",
+  "Banco de Occidente":"#34d399",
+  "Banco Continental":"#a78bfa",
+  "Banco del País (BANPAIS)":"#38bdf8",
+  "Promerica":"#fb923c",
+  "Lafise":"#6ee7b7",
+  "Banco Azteca":"#f97316",
+  "Bancatlan":"#818cf8",
+  "FICENSA":"#c084fc",
+  "Sogerin":"#67e8f9",
+  "BANHCAFE":"#86efac",
+  "Banco Popular":"#fde047",
+  "BANADESA":"#4ade80",
+  "Efectivo":"#34d399",
+  "Otro":"#94a3b8",
 };
 
 const L  = n => `L ${Number(n).toLocaleString("es-HN",{minimumFractionDigits:2,maximumFractionDigits:2})}`;
